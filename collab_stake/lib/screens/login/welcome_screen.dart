@@ -60,8 +60,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   width: double.infinity,
                   child: OutlinedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/login');
-                      print("login: ");
+                      Navigator.pushNamed(context, '/cadastro');
+                      print("cadastro: ");
                     },
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: Theme.of(context).primaryColor),

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class CadastroScreen extends StatefulWidget {
+  const CadastroScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<CadastroScreen> createState() => _CadastroScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>
+class _CadastroScreenState extends State<CadastroScreen>
     with SingleTickerProviderStateMixin {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
   bool esconderSenha = true;
+  bool esconderSenha2 = true;
   bool manterConectado = true;
   bool _isPhone = false;
   String _previousText = '';
@@ -35,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Login',
+                  'Cadastro',
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -49,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen>
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: Text(
-                        'Bem-vindo de volta !',
+                        'Bem-vindo !',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -60,6 +61,30 @@ class _LoginScreenState extends State<LoginScreen>
                   ],
                 ),
                 const SizedBox(height: 10),
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal:
+                              12.0), // Ajusta o espaço superior e inferior
+                      child: FaIcon(
+                        FontAwesomeIcons.envelope,
+                        color: Colors.grey,
+                        size: 20.0,
+                      ),
+                    ),
+                    hintText: 'Nome',
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
                 TextField(
                   controller: _emailController,
                   decoration: InputDecoration(
@@ -111,29 +136,51 @@ class _LoginScreenState extends State<LoginScreen>
                         esconderSenha = !esconderSenha;
                       }),
                       child: Icon(
-                          esconderSenha ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
+                          esconderSenha
+                              ? FontAwesomeIcons.eyeSlash
+                              : FontAwesomeIcons.eye,
                           size: 20),
                     ),
                   ),
                 ),
-                const SizedBox(height: 5),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Esqueceu a senha ?',
-                      style: TextStyle(color: Theme.of(context).primaryColor),
+                const SizedBox(height: 20),
+                TextField(
+                  controller: _senhaController,
+                  obscureText: esconderSenha2,
+                  decoration: InputDecoration(
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal:
+                              12.0), // Ajusta o espaço superior e inferior
+                      child: FaIcon(
+                        FontAwesomeIcons.lock,
+                        color: Colors.grey,
+                        size: 20.0,
+                      ),
+                    ),
+                    hintText: 'Repitir senha',
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
+                    ),
+                    suffixIcon: InkWell(
+                      onTap: () => setState(() {
+                        esconderSenha2 = !esconderSenha2;
+                      }),
+                      child: Icon(
+                          esconderSenha2 ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
+                          size: 20),
                     ),
                   ),
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 20),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/home');
-                    },
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(
@@ -142,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen>
                       padding: const EdgeInsets.symmetric(vertical: 5),
                     ),
                     child: const Text(
-                      'ENTRAR',
+                      'CADASTRAR',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -154,13 +201,13 @@ class _LoginScreenState extends State<LoginScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Não possui uma conta ? "),
+                    const Text("Ja possui uma conta ? "),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/cadastro');
+                        Navigator.pushNamed(context, '/login');
                       },
                       child: Text(
-                        'Cadastre-se',
+                        'Entrar',
                         style: TextStyle(color: Theme.of(context).primaryColor),
                       ),
                     ),

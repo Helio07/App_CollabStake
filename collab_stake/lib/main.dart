@@ -1,3 +1,5 @@
+import 'package:collab_stake/screens/home_screen.dart';
+import 'package:collab_stake/screens/login/cadastro_screen.dart';
 import 'package:collab_stake/screens/login/login_screen.dart';
 import 'package:collab_stake/screens/login/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +29,8 @@ class _MyAppState extends State<MyApp> {
       ),
       routes: {
         '/login': (context) => const LoginScreen(),
-        //'/home': (context) => TelaHome(),
+        '/cadastro': (context) => const CadastroScreen(),
+        '/home': (context) => const HomeScreen(),
       },
     );
   }
