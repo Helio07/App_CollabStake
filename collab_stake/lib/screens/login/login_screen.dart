@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:collab_stake/bloc/autenticacao_bloc/autenticacao_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,147 +30,160 @@ class _LoginScreenState extends State<LoginScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                const SizedBox(height: 150),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+        child: BlocBuilder<AutenticacaoBloc, AutenticacaoState>(
+          builder: (context, state) {
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text(
-                        'Bem-vindo de volta !',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
+                    Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    const SizedBox(height: 150),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            'Bem-vindo de volta !',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    TextField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        prefixIcon: const Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 12.0,
+                              horizontal:
+                                  12.0), // Ajusta o espaço superior e inferior
+                          child: FaIcon(
+                            FontAwesomeIcons.envelope,
+                            color: Colors.grey,
+                            size: 20.0,
+                          ),
+                        ),
+                        hintText: 'Email',
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
                         ),
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    prefixIcon: const Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 12.0,
-                          horizontal:
-                              12.0), // Ajusta o espaço superior e inferior
-                      child: FaIcon(
-                        FontAwesomeIcons.envelope,
-                        color: Colors.grey,
-                        size: 20.0,
+                    const SizedBox(height: 20),
+                    TextField(
+                      controller: _senhaController,
+                      obscureText: esconderSenha,
+                      decoration: InputDecoration(
+                        prefixIcon: const Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 12.0,
+                              horizontal:
+                                  12.0), // Ajusta o espaço superior e inferior
+                          child: FaIcon(
+                            FontAwesomeIcons.lock,
+                            color: Colors.grey,
+                            size: 20.0,
+                          ),
+                        ),
+                        hintText: 'Senha',
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                        suffixIcon: InkWell(
+                          onTap: () => setState(() {
+                            esconderSenha = !esconderSenha;
+                          }),
+                          child: Icon(
+                              esconderSenha
+                                  ? FontAwesomeIcons.eyeSlash
+                                  : FontAwesomeIcons.eye,
+                              size: 20),
+                        ),
                       ),
                     ),
-                    hintText: 'Email',
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextField(
-                  controller: _senhaController,
-                  obscureText: esconderSenha,
-                  decoration: InputDecoration(
-                    prefixIcon: const Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 12.0,
-                          horizontal:
-                              12.0), // Ajusta o espaço superior e inferior
-                      child: FaIcon(
-                        FontAwesomeIcons.lock,
-                        color: Colors.grey,
-                        size: 20.0,
+                    const SizedBox(height: 5),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Esqueceu a senha ?',
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        ),
                       ),
                     ),
-                    hintText: 'Senha',
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none,
-                    ),
-                    suffixIcon: InkWell(
-                      onTap: () => setState(() {
-                        esconderSenha = !esconderSenha;
-                      }),
-                      child: Icon(
-                          esconderSenha ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
-                          size: 20),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Esqueceu a senha ?',
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/home');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                    ),
-                    child: const Text(
-                      'ENTRAR',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    const SizedBox(height: 15),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          print("chamou o bloc");
+                          context.read<AutenticacaoBloc>().add(
+                              SolicitouLoginEvent(
+                                  email: _emailController.text,
+                                  senha: _senhaController.text));
+                          //Navigator.pushNamed(context, '/home');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context).primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                        ),
+                        child: const Text(
+                          'ENTRAR',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Não possui uma conta ? "),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/cadastro');
-                      },
-                      child: Text(
-                        'Cadastre-se',
-                        style: TextStyle(color: Theme.of(context).primaryColor),
-                      ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Não possui uma conta ? "),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/cadastro');
+                          },
+                          child: Text(
+                            'Cadastre-se',
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
