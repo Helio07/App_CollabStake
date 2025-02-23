@@ -46,7 +46,7 @@ class _AppViewState extends State<AppView> {
     return MaterialApp(
       home: const WelcomeScreen(),
       theme: ThemeData(
-          primaryColor: const Color(0xFF246EB9), fontFamily: 'Roboto'),
+          primaryColor: const Color(0xFF246EB9) ,fontFamily: 'Roboto'),
       routes: {
         '/login': (context) => const LoginScreen(),
         '/cadastro': (context) => const CadastroScreen(),

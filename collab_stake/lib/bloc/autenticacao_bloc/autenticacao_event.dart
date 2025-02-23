@@ -10,3 +10,6 @@ class SolicitouLoginEvent extends AutenticacaoEvent {
   final String email;
   final String senha;
 }
+
+// Novo evento para limpar erro de credenciais.
+class ClearErroCredenciaisEvent extends AutenticacaoEvent {}
