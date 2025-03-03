@@ -11,5 +11,13 @@ class SolicitouLoginEvent extends AutenticacaoEvent {
   final String senha;
 }
 
-// Novo evento para limpar erro de credenciais.
+class SolicitouCadastrarEvent extends AutenticacaoEvent {
+  const SolicitouCadastrarEvent({required this.name, required this.email, required this.senha});
+  final String name;
+  final String email;
+  final String senha;
+}
+
 class ClearErroCredenciaisEvent extends AutenticacaoEvent {}
+
+class ClearErroCadastroEvent extends AutenticacaoEvent {}

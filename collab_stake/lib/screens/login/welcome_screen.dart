@@ -36,7 +36,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/login');
-                      print("login: ");
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).primaryColor,
@@ -61,7 +60,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   child: OutlinedButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/cadastro');
-                      print("cadastro: ");
                     },
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: Theme.of(context).primaryColor),

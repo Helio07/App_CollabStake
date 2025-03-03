@@ -1,5 +1,6 @@
 import 'package:collab_stake/bloc/autenticacao_bloc/autenticacao_bloc.dart';
 import 'package:collab_stake/repositories/autenticacao_repository.dart';
+import 'package:collab_stake/screens/dashboard/dashboard_screen.dart';
 import 'package:collab_stake/screens/home_screen.dart';
 import 'package:collab_stake/screens/login/cadastro_screen.dart';
 import 'package:collab_stake/screens/login/login_screen.dart';
@@ -51,6 +52,7 @@ class _AppViewState extends State<AppView> {
         '/login': (context) => const LoginScreen(),
         '/cadastro': (context) => const CadastroScreen(),
         '/home': (context) => const HomeScreen(),
+        '/deshboard': (context) => const DashboardScreen(),
       },
     );
   }
