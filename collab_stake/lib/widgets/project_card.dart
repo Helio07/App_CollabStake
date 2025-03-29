@@ -25,26 +25,7 @@ class ProjectCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              // Conteúdo à esquerda: nome e contador
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        projectName,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Contador: $counter',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              // Imagem quadrada à direita
+              // Imagem quadrada à esquerda
               Container(
                 width: 80,
                 height: 80,
@@ -57,9 +38,30 @@ class ProjectCard extends StatelessWidget {
                   ),
                 ),
               ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        projectName,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'stakeholders: $counter',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
-          // Ícone de estrela para favoritar no canto superior direito
           Positioned(
             top: 8,
             right: 8,

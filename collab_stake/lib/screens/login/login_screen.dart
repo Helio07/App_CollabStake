@@ -126,10 +126,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                context.read<AutenticacaoBloc>().add(
-                                    SolicitouLoginEvent(
-                                        email: _emailController.text,
-                                        senha: _senhaController.text));
+                                Navigator.pushReplacementNamed(context, '/deshboard');
+                                // context.read<AutenticacaoBloc>().add(
+                                //     SolicitouLoginEvent(
+                                //         email: _emailController.text,
+                                //         senha: _senhaController.text));
                               }
                             },
                             style: ElevatedButton.styleFrom(
