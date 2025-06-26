@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:collab_stake/bloc/autenticacao_bloc/autenticacao_bloc.dart';
+import 'package:collab_stake/bloc/autenticacaoBloc/autenticacao_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -102,7 +102,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // Mensagem de erro à esquerda
                             context.watch<AutenticacaoBloc>().state.credenciaisIncorretas
                                 ? const Text(
                                     'Credenciais incorretas',
@@ -110,7 +109,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                         color: Colors.red, fontWeight: FontWeight.w500),
                                   )
                                 : const SizedBox(),
-                            // Botão "Esqueceu a senha ?" à direita
                             TextButton(
                               onPressed: () {},
                               child: Text(
@@ -126,11 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                Navigator.pushReplacementNamed(context, '/deshboard');
-                                // context.read<AutenticacaoBloc>().add(
-                                //     SolicitouLoginEvent(
-                                //         email: _emailController.text,
-                                //         senha: _senhaController.text));
+                                context.read<AutenticacaoBloc>().add(
+                                    SolicitouLoginEvent(
+                                        email: _emailController.text,
+                                        senha: _senhaController.text));
                               }
                             },
                             style: ElevatedButton.styleFrom(
