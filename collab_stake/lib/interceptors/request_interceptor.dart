@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 
 class RequestInterceptor extends Interceptor {
   final String baseUrl = const String.fromEnvironment('BASE_URL');
-  final String appKey = const String.fromEnvironment('APP_KEY');
 
   RequestInterceptor();
   @override
@@ -13,7 +12,6 @@ class RequestInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     options.headers.addAll({
-      'APP-KEY': appKey,
       'accept': 'application/json',
       'content-type': 'application/json',
     });
@@ -25,7 +23,11 @@ class RequestInterceptor extends Interceptor {
       return handler.next(options);
     }
     var token = await TokenService().getToken();
-    options.headers.addAll({'Authorization': 'Bearer $token'});
+    if (token != null && token.isNotEmpty) {
+      options.headers.addAll({'Authorization': 'Bearer $token'});
+    } else {
+      print('Token não encontrado!');
+    }
     return handler.next(options);
   }
 

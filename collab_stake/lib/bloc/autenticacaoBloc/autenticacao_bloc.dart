@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:collab_stake/models/usuario.dart';
 import 'package:collab_stake/repositories/autenticacao_repository.dart';
+import 'package:collab_stake/services/local_storage_service.dart';
+import 'package:collab_stake/services/token_service.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
@@ -27,8 +29,11 @@ class AutenticacaoBloc extends Bloc<AutenticacaoEvent, AutenticacaoState> {
       if (response == ErroAoLogar.credenciaisInvalidas) {
         emit(state.copyWith(credenciaisIncorretas: true));
       } else if (response['data'] != null) {
-        final usuario = Usuario.fromJson(response['data']);
+        final usuario = Usuario.fromJson(response);
+        final prefs = LocalStorageService();
+        await prefs.setString('usuario', usuario.toJson());
         emit(AutenticacaoState.authenticated(usuario));
+        TokenService().setToken(usuario.token);
       }
     } catch (e) {
       print("erro no login: $e");
