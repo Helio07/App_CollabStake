@@ -18,23 +18,21 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final AutenticacaoRepository _autenticacaoRepository = AutenticacaoRepository();
+  final AutenticacaoRepository _autenticacaoRepository =
+      AutenticacaoRepository();
   final ProjetoRepository _projetoRepository = ProjetoRepository();
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => AutenticacaoBloc(autenticacaoRepository: _autenticacaoRepository),
-        ),
-        BlocProvider(
-          create: (context) => ProjetoBloc(projetoRepository: _projetoRepository),
-        ),
-       
-      ],
-      child: const AppView()
-    );
+    return MultiBlocProvider(providers: [
+      BlocProvider(
+        create: (context) =>
+            AutenticacaoBloc(autenticacaoRepository: _autenticacaoRepository),
+      ),
+      BlocProvider(
+        create: (context) => ProjetoBloc(projetoRepository: _projetoRepository),
+      ),
+    ], child: const AppView());
   }
 }
 
@@ -46,14 +44,19 @@ class AppView extends StatefulWidget {
 }
 
 class _AppViewState extends State<AppView> {
-
   @override
-
   Widget build(BuildContext context) {
     return MaterialApp(
       home: const WelcomeScreen(),
       theme: ThemeData(
-          primaryColor: const Color(0xFF246EB9) ,fontFamily: 'Roboto'),
+        primaryColor: const Color(0xFF246EB9),
+        fontFamily: 'Roboto',
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xFF246EB9),
+          secondary: Color(0xFFEBF2FA),
+          onPrimary: Colors.white,
+        ),
+      ),
       routes: {
         '/login': (context) => const LoginScreen(),
         '/cadastro': (context) => const CadastroScreen(),
@@ -63,4 +66,3 @@ class _AppViewState extends State<AppView> {
     );
   }
 }
-

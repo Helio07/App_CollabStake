@@ -1,6 +1,21 @@
 part of 'projeto_bloc.dart';
 
-@immutable
-sealed class ProjetoState {}
+class ProjetoState extends Equatable {
+  const ProjetoState({
+    this.projetos = const [],
+  });
 
-final class ProjetoInitial extends ProjetoState {}
+  final List<Projeto> projetos;
+
+  @override
+  List<Object?> get props => [projetos];
+
+  ProjetoState copyWith({
+    List<Projeto>? projetos,
+  }) {
+    return ProjetoState(
+      projetos: projetos ?? this.projetos,
+    );
+  }
+}
+

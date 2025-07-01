@@ -96,40 +96,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
               Container(
-                child: ListView(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    ProjectCard(
-                      projectName: 'Projeto Alpha',
-                      counter: 10,
-                      imageUrl:
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHbCyrLWWTmsc-Y7rtxA3q22sogeUWCDa3Tw&s',
-                      isFavorite: false,
-                      onFavoriteToggle: () {
-                        print('Favoritar Projeto Alpha');
-                      },
-                    ),
-                    ProjectCard(
-                      projectName: 'Projeto Beta',
-                      counter: 5,
-                      imageUrl: 'https://via.placeholder.com/150',
-                      isFavorite: true,
-                      onFavoriteToggle: () {
-                        print('Favoritar Projeto Beta');
-                      },
-                    ),
-                    ProjectCard(
-                      projectName: 'Projeto Gamma',
-                      counter: 8,
-                      imageUrl: 'https://via.placeholder.com/150',
-                      isFavorite: false,
-                      onFavoriteToggle: () {
-                        print('Favoritar Projeto Gamma');
-                      },
-                    ),
-                  ],
-                ),
+                child: state.projetos.isEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Center(
+                          child: Text(
+                            'Nenhum projeto cadastrado.',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: state.projetos.length,
+                        itemBuilder: (context, index) {
+                          final projeto = state.projetos[index];
+                          return ProjectCard(
+                            projectName: projeto.nome ?? 'Sem nome',
+                            counter: 0, // Substitua por um campo real se existir
+                            imageUrl: 'https://via.placeholder.com/150', // Substitua se houver imagem no projeto
+                            isFavorite: projeto.favorito ?? false,
+                          );
+                        },
+                      ),
               ),
             ],
           ),

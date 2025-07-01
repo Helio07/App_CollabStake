@@ -12,7 +12,7 @@ part 'autenticacao_state.dart';
 class AutenticacaoBloc extends Bloc<AutenticacaoEvent, AutenticacaoState> {
   AutenticacaoBloc({required AutenticacaoRepository autenticacaoRepository})
       : _autenticacaoRepository = autenticacaoRepository,
-        super(AutenticacaoState.unauthenticated()) {
+        super(const AutenticacaoState.unauthenticated()) {
     on<SolicitouLoginEvent>(_solicitarLogin);
     on<SolicitouCadastrarEvent>(_solicitarCadastro);
     on<ClearErroCredenciaisEvent>(_clearErroCredenciais);

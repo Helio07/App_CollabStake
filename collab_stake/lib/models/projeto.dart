@@ -6,6 +6,9 @@ class Projeto {
   String? endereco;
   String? areaAtuacao;
   bool? favorito;
+  String? descricao;
+  String? dataInicio;
+  String? dataFinal;
   String? createdAt;
   String? updatedAt;
 
@@ -15,6 +18,9 @@ class Projeto {
     this.endereco,
     this.areaAtuacao,
     this.favorito,
+    this.descricao,
+    this.dataInicio,  
+    this.dataFinal,
     this.createdAt,
     this.updatedAt,
   });
@@ -26,6 +32,9 @@ class Projeto {
       endereco: json['endereco'],
       areaAtuacao: json['area_atuacao'],
       favorito: json['favorito'],
+      descricao: json['descricao'],
+      dataInicio: json['data_inicio'],
+      dataFinal: json['data_final'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
     );
@@ -38,6 +47,9 @@ class Projeto {
       'endereco': endereco,
       'area_atuacao': areaAtuacao,
       'favorito': favorito,
+      'descricao': descricao,
+      'data_inicio': dataInicio,
+      'data_final': dataFinal,
       'created_at': createdAt,
       'updated_at': updatedAt,
     };
@@ -45,5 +57,10 @@ class Projeto {
 
   static List<Projeto> fromJsonList(List<dynamic> list) {
     return list.map((e) => Projeto.fromJson(e)).toList();
+  }
+
+  @override
+  String toString() {
+    return 'Projeto{id: $id, nome: $nome, endereco: $endereco, areaAtuacao: $areaAtuacao, favorito: $favorito, descricao: $descricao, dataInicio: $dataInicio, dataFinal: $dataFinal, createdAt: $createdAt, updatedAt: $updatedAt}';
   }
 }
