@@ -59,10 +59,11 @@ class ProjetoRepository {
 
   Future<dynamic> favoritaProjeto({
     required bool favorito,
+    required int idProjeto,
   }) async {
     try {
       final response = await _dio.put(
-        'projeto/update',
+        'projeto/$idProjeto',
         data: {
           'favorito': favorito,
         },

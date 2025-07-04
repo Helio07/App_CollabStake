@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Projeto {
-  int? id;
+  int id;
   String? nome;
   String? endereco;
   String? areaAtuacao;
@@ -13,7 +13,7 @@ class Projeto {
   String? updatedAt;
 
   Projeto({
-    this.id,
+    required this.id,
     this.nome,
     this.endereco,
     this.areaAtuacao,

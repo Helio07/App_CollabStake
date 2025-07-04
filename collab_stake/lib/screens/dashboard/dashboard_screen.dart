@@ -118,8 +118,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           final projeto = state.projetos[index];
                           return ProjectCard(
                             projectName: projeto.nome ?? 'Sem nome',
-                            counter: 0, // Substitua por um campo real se existir
-                            imageUrl: 'https://via.placeholder.com/150', // Substitua se houver imagem no projeto
+                            projectId: projeto.id,
+                            counter: 0, // Substitua pelo campo real 
                             isFavorite: projeto.favorito ?? false,
                           );
                         },

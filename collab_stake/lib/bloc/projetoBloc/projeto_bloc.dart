@@ -11,6 +11,7 @@ class ProjetoBloc extends Bloc<ProjetoEvent, ProjetoState> {
   ProjetoBloc({required ProjetoRepository projetoRepository}) : _projetoRepository = projetoRepository, super(const ProjetoState()) {
     on<ListouProjetosEvent>(_listarProjetos);
     on<CriouProjetosEvent>(criarProjeto); 
+    on<FavoritouProjetosEvent>(favoritaProjeto);
   }
   final ProjetoRepository _projetoRepository;
 
@@ -51,6 +52,7 @@ class ProjetoBloc extends Bloc<ProjetoEvent, ProjetoState> {
   void favoritaProjeto(FavoritouProjetosEvent event, Emitter<ProjetoState> emit) async {
     try {
       await _projetoRepository.favoritaProjeto(
+        idProjeto: event.idProjeto,
         favorito: event.favorito,
       );
       add(const ListouProjetosEvent());

@@ -1,6 +1,5 @@
 part of 'projeto_bloc.dart';
 
-
 @immutable
 abstract class ProjetoEvent {
   const ProjetoEvent();
@@ -28,8 +27,8 @@ class CriouProjetosEvent extends ProjetoEvent {
 }
 
 class FavoritouProjetosEvent extends ProjetoEvent {
-  const FavoritouProjetosEvent({
-    required this.favorito
-  });
+  const FavoritouProjetosEvent(
+      {required this.favorito, required this.idProjeto});
   final bool favorito;
+  final int idProjeto;
 }
