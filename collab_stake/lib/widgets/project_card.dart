@@ -34,76 +34,79 @@ class ProjectCard extends StatelessWidget {
       return Colors.primaries[colorIndex].shade300;
     }
 
-    return Card(
-      elevation: 2,
-      margin: const EdgeInsets.all(8),
-      child: Stack(
-        children: [
-          Row(
-            children: [
-              // Quadrado colorido com iniciais
-              Container(
-                width: 80,
-                height: 80,
-                margin: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: getColor(projectName),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: Text(
-                    getInitials(projectName),
-                    style: const TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, '/deshboard/stakeholder', arguments: projectId);
+      },
+      child: Card(
+        elevation: 2,
+        margin: const EdgeInsets.all(8),
+        child: Stack(
+          children: [
+            Row(
+              children: [
+                // Quadrado colorido com iniciais
+                Container(
+                  width: 80,
+                  height: 80,
+                  margin: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: getColor(projectName),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Center(
+                    child: Text(
+                      getInitials(projectName),
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        projectName,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          projectName,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'stakeholders: $counter',
-                      ),
-                    ],
+                        const SizedBox(height: 4),
+                        Text(
+                          'stakeholders: $counter',
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Positioned(
-            top: 8,
-            right: 8,
-            child: InkWell(
-              onTap: () {
-
-                print('Favoritar projeto: $isFavorite');
-                context.read<ProjetoBloc>().add(
-                  FavoritouProjetosEvent(idProjeto: projectId, favorito: !isFavorite),
-                );
-              },
-              borderRadius: BorderRadius.circular(20),
-              child: Icon(
-                isFavorite ? Icons.star : Icons.star_border,
-                color: isFavorite ? Colors.amber : Colors.grey,
+              ],
+            ),
+            Positioned(
+              top: 8,
+              right: 8,
+              child: InkWell(
+                onTap: () {
+                  context.read<ProjetoBloc>().add(
+                    FavoritouProjetosEvent(idProjeto: projectId, favorito: !isFavorite),
+                  );
+                },
+                borderRadius: BorderRadius.circular(20),
+                child: Icon(
+                  isFavorite ? Icons.star : Icons.star_border,
+                  color: isFavorite ? Colors.amber : Colors.grey,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

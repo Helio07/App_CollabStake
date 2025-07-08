@@ -24,7 +24,6 @@ class AutenticacaoRepository {
     try {
       final response = await _dio
           .post('/auth/register', data: {"name": name, "email": email, "password": senha});
-      print("fez a requisição");
       return response.data;
     } on DioException catch (e) {
       if (e.response?.statusCode == 400) {

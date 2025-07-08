@@ -68,7 +68,6 @@ class ProjetoRepository {
           'favorito': favorito,
         },
       );
-      print(response.toString());
       return response.data;
     } on DioException catch (e) {
       if (e.response != null) {

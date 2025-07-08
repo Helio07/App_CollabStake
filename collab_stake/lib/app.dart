@@ -2,11 +2,14 @@ import 'package:collab_stake/bloc/autenticacaoBloc/autenticacao_bloc.dart';
 import 'package:collab_stake/bloc/projetoBloc/projeto_bloc.dart';
 import 'package:collab_stake/repositories/autenticacao_repository.dart';
 import 'package:collab_stake/repositories/projeto_repository.dart';
+import 'package:collab_stake/screens/ajuda/ajuda_screen.dart';
+import 'package:collab_stake/screens/conta/conta_screen.dart';
 import 'package:collab_stake/screens/dashboard/dashboard_screen.dart';
 import 'package:collab_stake/screens/home_screen.dart';
 import 'package:collab_stake/screens/login/cadastro_screen.dart';
 import 'package:collab_stake/screens/login/login_screen.dart';
 import 'package:collab_stake/screens/login/welcome_screen.dart';
+import 'package:collab_stake/screens/stakeholder/stakeholder_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -62,6 +65,9 @@ class _AppViewState extends State<AppView> {
         '/cadastro': (context) => const CadastroScreen(),
         '/home': (context) => const HomeScreen(),
         '/deshboard': (context) => const DashboardScreen(),
+        '/deshboard/stakeholder': (context) => const StakeholderScreen(),
+        '/deshboard/conta': (context) => const ContaScreen(),
+        '/deshboard/ajuda': (context) => const AjudaScreen(),
       },
     );
   }
