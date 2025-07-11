@@ -16,12 +16,13 @@ class _LayoutState extends State<Layout> {
    @override
   void initState() {
     super.initState();
-    _selectedIndex = widget.selectedIndex; // Inicialize com o valor recebido
+    _selectedIndex = widget.selectedIndex; 
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFFEBF2FA),
@@ -72,7 +73,6 @@ class _LayoutState extends State<Layout> {
         },
         backgroundColor: const Color(0xFFEBF2FA),
         selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.grey,
       ),
     );
   }

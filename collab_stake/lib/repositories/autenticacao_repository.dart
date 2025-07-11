@@ -36,4 +36,38 @@ class AutenticacaoRepository {
       rethrow;
     }
   }
+
+  Future<dynamic> atualiza({String? name, String? email, String? telefone}) async {
+    try {
+      final response = await _dio
+          .put('/user', data: {"name": name, "email": email, "telefone": telefone});
+      return response.data;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 400) {
+        print('entrou em catch e respota 400');
+        return ErroAoCadastrar.emailExistente;
+      }else if (e.response?.statusCode == 422) {
+        print('entrou em catch e respota 402');
+        return ErroAoCadastrar.senhaInvalida;
+      }
+      rethrow;
+    }
+  }
+
+  Future<dynamic> buscarDados() async {
+    try {
+      final response = await _dio
+          .get('/user/dados');
+      return response.data;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 400) {
+        print('entrou em catch e respota 400');
+        return ErroAoCadastrar.emailExistente;
+      }else if (e.response?.statusCode == 422) {
+        print('entrou em catch e respota 402');
+        return ErroAoCadastrar.senhaInvalida;
+      }
+      rethrow;
+    }
+  }
 }

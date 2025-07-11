@@ -39,12 +39,14 @@ class DadosUsuario {
   int? id;
   String? email;
   String? name;
+  String? telefone;
 
 
   DadosUsuario({
     this.id,
     this.email,
     this.name,
+    this.telefone,
   });
 
   factory DadosUsuario.fromJson(Map<String, dynamic> json) {
@@ -52,6 +54,7 @@ class DadosUsuario {
       id: json['id'],
       email: json['email'],
       name: json['name'],
+      telefone: json['telefone'],
     );
   }
 
@@ -60,6 +63,7 @@ class DadosUsuario {
       'id': id,
       'email': email,
       'name': name,
+      'telefone': telefone,
     };
   }
 }

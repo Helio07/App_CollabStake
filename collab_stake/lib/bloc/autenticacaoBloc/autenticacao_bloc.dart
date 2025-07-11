@@ -17,11 +17,14 @@ class AutenticacaoBloc extends Bloc<AutenticacaoEvent, AutenticacaoState> {
     on<SolicitouCadastrarEvent>(_solicitarCadastro);
     on<ClearErroCredenciaisEvent>(_clearErroCredenciais);
     on<ClearErroCadastroEvent>(_clearErroCadastro);
+    on<AtualizouDadosEvent>(_atualizarDados);
+    on<BuscoudadosEvent>(_buscarDados);
   }
 
   final AutenticacaoRepository _autenticacaoRepository;
 
-  void _solicitarLogin(SolicitouLoginEvent event, Emitter<AutenticacaoState> emit) async {
+  void _solicitarLogin(
+      SolicitouLoginEvent event, Emitter<AutenticacaoState> emit) async {
     emit(state.copyWith(buscando: true, credenciaisIncorretas: false));
     try {
       final response = await _autenticacaoRepository.login(
@@ -42,7 +45,8 @@ class AutenticacaoBloc extends Bloc<AutenticacaoEvent, AutenticacaoState> {
     }
   }
 
-  void _solicitarCadastro(SolicitouCadastrarEvent event, Emitter<AutenticacaoState> emit) async {
+  void _solicitarCadastro(
+      SolicitouCadastrarEvent event, Emitter<AutenticacaoState> emit) async {
     emit(state.copyWith(buscando: true));
     try {
       final response = await _autenticacaoRepository.cadastrar(
@@ -61,11 +65,54 @@ class AutenticacaoBloc extends Bloc<AutenticacaoEvent, AutenticacaoState> {
     }
   }
 
-  void _clearErroCredenciais(ClearErroCredenciaisEvent event, Emitter<AutenticacaoState> emit) {
+  void _clearErroCredenciais(
+      ClearErroCredenciaisEvent event, Emitter<AutenticacaoState> emit) {
     emit(state.copyWith(credenciaisIncorretas: false));
   }
 
-  void _clearErroCadastro(ClearErroCadastroEvent event, Emitter<AutenticacaoState> emit) {
+  void _clearErroCadastro(
+      ClearErroCadastroEvent event, Emitter<AutenticacaoState> emit) {
     emit(state.copyWith(emailExistente: false, senhaInvalida: false));
+  }
+
+  void _atualizarDados(
+      AtualizouDadosEvent event, Emitter<AutenticacaoState> emit) async {
+        emit(state.copyWith(buscando: true));
+    try {
+      final response = await _autenticacaoRepository.atualiza(
+        name: event.name,
+        email: event.email,
+        telefone: event.telefone,
+      );
+      if (response != null) {
+        add(BuscoudadosEvent());
+      }
+    } catch (e) {
+      print("erro ao atualizar dados: $e");
+    } finally {
+      emit(state.copyWith(buscando: false));
+    }
+  }
+
+  void _buscarDados(
+      BuscoudadosEvent event, Emitter<AutenticacaoState> emit) async {
+    emit(state.copyWith(buscando: true, credenciaisIncorretas: false));
+    try {
+      final response = await _autenticacaoRepository.buscarDados();
+      if (response != null) {
+        final dados = DadosUsuario.fromJson(response);
+        final usuario = Usuario(
+          token: state.usuario?.token, 
+          data: dados,
+        );
+        emit(state.copyWith(usuario: usuario));
+        final prefs = LocalStorageService();
+        await prefs.setString('usuario', usuario.toJson());
+      }
+    } catch (e) {
+      print("erro no login: $e");
+    } finally {
+      emit(state.copyWith(buscando: false));
+    }
   }
 }

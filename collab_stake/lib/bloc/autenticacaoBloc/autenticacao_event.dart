@@ -21,3 +21,13 @@ class SolicitouCadastrarEvent extends AutenticacaoEvent {
 class ClearErroCredenciaisEvent extends AutenticacaoEvent {}
 
 class ClearErroCadastroEvent extends AutenticacaoEvent {}
+
+
+class AtualizouDadosEvent extends AutenticacaoEvent {
+  const AtualizouDadosEvent({this.name, this.email, this.telefone});
+  final String? name;
+  final String? email;
+  final String? telefone;
+}
+
+class BuscoudadosEvent extends AutenticacaoEvent {}
