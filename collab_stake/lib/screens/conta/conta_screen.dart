@@ -1,4 +1,5 @@
 import 'package:collab_stake/screens/conta/alterar_dados.dart';
+import 'package:collab_stake/screens/conta/trocar_senha_screen.dart';
 import 'package:collab_stake/screens/layout/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -99,7 +100,12 @@ class _ContaScreenState extends State<ContaScreen> {
                     subtitle: const Text('Alterar a senha de acesso'),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
-                      // TODO: Implementar edição de conta futuramente
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const TrocarSenhaScreen();
+                        },
+                      );
                     },
                   ),
                 ),

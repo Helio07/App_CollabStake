@@ -19,6 +19,7 @@ class AutenticacaoBloc extends Bloc<AutenticacaoEvent, AutenticacaoState> {
     on<ClearErroCadastroEvent>(_clearErroCadastro);
     on<AtualizouDadosEvent>(_atualizarDados);
     on<BuscoudadosEvent>(_buscarDados);
+    on<TrocouSenhaEvent>(_trocarSenha);
   }
 
   final AutenticacaoRepository _autenticacaoRepository;
@@ -108,6 +109,27 @@ class AutenticacaoBloc extends Bloc<AutenticacaoEvent, AutenticacaoState> {
         emit(state.copyWith(usuario: usuario));
         final prefs = LocalStorageService();
         await prefs.setString('usuario', usuario.toJson());
+      }
+    } catch (e) {
+      print("erro no login: $e");
+    } finally {
+      emit(state.copyWith(buscando: false));
+    }
+  }
+
+  void _trocarSenha(
+      TrocouSenhaEvent event, Emitter<AutenticacaoState> emit) async {
+    emit(state.copyWith(buscando: true, senhaInvalida: false));
+    try {
+      print("tentando trocar senha");
+      final response = await _autenticacaoRepository.trocarSenha(
+        senhaAtual: event.senhaAtual,
+        novaSenha: event.novaSenha,
+        novaSenhaConfirmation: event.novaSenhaConfirmation,
+      );
+      print("resposta da troca de senha: $response");
+      if (response == ErroAoTrocarSenha.senhaAtualIncorreta) {
+        emit(state.copyWith(senhaInvalida: true));
       }
     } catch (e) {
       print("erro no login: $e");

@@ -31,3 +31,10 @@ class AtualizouDadosEvent extends AutenticacaoEvent {
 }
 
 class BuscoudadosEvent extends AutenticacaoEvent {}
+
+class TrocouSenhaEvent extends AutenticacaoEvent {
+  const TrocouSenhaEvent({required this.senhaAtual, required this.novaSenha, required this.novaSenhaConfirmation});
+  final String senhaAtual;
+  final String novaSenha;
+  final String novaSenhaConfirmation;
+}
