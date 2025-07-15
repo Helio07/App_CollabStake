@@ -38,3 +38,11 @@ class TrocouSenhaEvent extends AutenticacaoEvent {
   final String novaSenha;
   final String novaSenhaConfirmation;
 }
+
+class SolicitouLogoutEvent extends AutenticacaoEvent {}
+
+class CarregouUsuarioLogadoEvent extends AutenticacaoEvent {}
+
+class SetouUsuarioNaoAutenticadoEvent extends AutenticacaoEvent {
+  const SetouUsuarioNaoAutenticadoEvent();
+}

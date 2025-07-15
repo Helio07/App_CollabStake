@@ -1,6 +1,7 @@
 import 'package:collab_stake/screens/conta/alterar_dados.dart';
 import 'package:collab_stake/screens/conta/trocar_senha_screen.dart';
 import 'package:collab_stake/screens/layout/layout.dart';
+import 'package:collab_stake/widgets/modal_logout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:collab_stake/bloc/autenticacaoBloc/autenticacao_bloc.dart';
@@ -123,7 +124,17 @@ class _ContaScreenState extends State<ContaScreen> {
                     subtitle: const Text('Encerrar sessão'),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
-                      //context.read<AutenticacaoBloc>().add(AutenticacaoLogoutSolicitado());
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor:
+                            Theme.of(context).scaffoldBackgroundColor,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(16)),
+                        ),
+                        builder: (context) => const LogoutBottomSheet(),
+                      );
                     },
                   ),
                 ),

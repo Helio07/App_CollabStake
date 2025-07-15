@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:collab_stake/models/usuario.dart';
 import 'package:collab_stake/repositories/autenticacao_repository.dart';
@@ -14,12 +16,15 @@ class AutenticacaoBloc extends Bloc<AutenticacaoEvent, AutenticacaoState> {
       : _autenticacaoRepository = autenticacaoRepository,
         super(const AutenticacaoState.unauthenticated()) {
     on<SolicitouLoginEvent>(_solicitarLogin);
+    on<CarregouUsuarioLogadoEvent>(_carregarUsuarioLogado);
     on<SolicitouCadastrarEvent>(_solicitarCadastro);
     on<ClearErroCredenciaisEvent>(_clearErroCredenciais);
     on<ClearErroCadastroEvent>(_clearErroCadastro);
     on<AtualizouDadosEvent>(_atualizarDados);
     on<BuscoudadosEvent>(_buscarDados);
     on<TrocouSenhaEvent>(_trocarSenha);
+    on<SolicitouLogoutEvent>(_logout);
+    on<SetouUsuarioNaoAutenticadoEvent>(_setarUsuarioNaoAutenticado);
   }
 
   final AutenticacaoRepository _autenticacaoRepository;
@@ -43,6 +48,21 @@ class AutenticacaoBloc extends Bloc<AutenticacaoEvent, AutenticacaoState> {
       print("erro no login: $e");
     } finally {
       emit(state.copyWith(buscando: false));
+    }
+  }
+
+  void _carregarUsuarioLogado(
+      CarregouUsuarioLogadoEvent event, Emitter<AutenticacaoState> emit) async {
+    try {
+      final prefs = LocalStorageService();
+      var usuario = await prefs.getString('usuario');
+      Usuario usuarioFormatado = Usuario.fromJson(jsonDecode(usuario!));
+      emit(AutenticacaoState.authenticated(usuarioFormatado));
+      TokenService().setToken(usuarioFormatado.token);
+      //add( BuscouDadosAtualizadosUsuario(withLoadingManager: false));
+
+    } catch (e) {
+      print("Erro ao carregar usuário logado: $e");
     }
   }
 
@@ -78,7 +98,7 @@ class AutenticacaoBloc extends Bloc<AutenticacaoEvent, AutenticacaoState> {
 
   void _atualizarDados(
       AtualizouDadosEvent event, Emitter<AutenticacaoState> emit) async {
-        emit(state.copyWith(buscando: true));
+    emit(state.copyWith(buscando: true));
     try {
       final response = await _autenticacaoRepository.atualiza(
         name: event.name,
@@ -103,7 +123,7 @@ class AutenticacaoBloc extends Bloc<AutenticacaoEvent, AutenticacaoState> {
       if (response != null) {
         final dados = DadosUsuario.fromJson(response);
         final usuario = Usuario(
-          token: state.usuario?.token, 
+          token: state.usuario?.token,
           data: dados,
         );
         emit(state.copyWith(usuario: usuario));
@@ -111,7 +131,7 @@ class AutenticacaoBloc extends Bloc<AutenticacaoEvent, AutenticacaoState> {
         await prefs.setString('usuario', usuario.toJson());
       }
     } catch (e) {
-      print("erro no login: $e");
+      print("erro ao buscar dados: $e");
     } finally {
       emit(state.copyWith(buscando: false));
     }
@@ -121,20 +141,44 @@ class AutenticacaoBloc extends Bloc<AutenticacaoEvent, AutenticacaoState> {
       TrocouSenhaEvent event, Emitter<AutenticacaoState> emit) async {
     emit(state.copyWith(buscando: true, senhaInvalida: false));
     try {
-      print("tentando trocar senha");
       final response = await _autenticacaoRepository.trocarSenha(
         senhaAtual: event.senhaAtual,
         novaSenha: event.novaSenha,
         novaSenhaConfirmation: event.novaSenhaConfirmation,
       );
-      print("resposta da troca de senha: $response");
       if (response == ErroAoTrocarSenha.senhaAtualIncorreta) {
         emit(state.copyWith(senhaInvalida: true));
       }
     } catch (e) {
-      print("erro no login: $e");
+      print("erro ao trocar senha: $e");
     } finally {
       emit(state.copyWith(buscando: false));
     }
   }
+
+  void _logout(
+      SolicitouLogoutEvent event, Emitter<AutenticacaoState> emit) async {
+    try {
+      print("tentando fazer logout");
+      print(state.status);
+      final response = await _autenticacaoRepository.logout();
+      print("resposta da troca de senha: $response");
+      print(state.status);
+    } catch (e) {
+      print("erro ao deslogar: $e");
+    } finally {
+      await TokenService().clearToken();
+      await LocalStorageService().clear();
+      emit(const AutenticacaoState.unauthenticated());
+    }
+  }
+
+  void _setarUsuarioNaoAutenticado(SetouUsuarioNaoAutenticadoEvent event,
+  Emitter<AutenticacaoState> emit) async {
+    try{
+      emit(const AutenticacaoState.unauthenticated());
+    }catch (e){
+      print("Erro ao setar usuário não autenticado: $e");
+    }
+    }
 }

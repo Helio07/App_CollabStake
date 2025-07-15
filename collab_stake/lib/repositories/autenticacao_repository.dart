@@ -97,4 +97,14 @@ class AutenticacaoRepository {
       rethrow;
     }
   }
+
+  Future<dynamic> logout() async {
+    try {
+      final response = await _dio.post('/user/logout');
+      return response.data;
+    } on DioException catch (e) {
+      print("erro ao fazer logout: $e");
+      rethrow;
+    }
+  }
 }
