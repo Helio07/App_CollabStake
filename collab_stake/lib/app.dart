@@ -66,6 +66,7 @@ class _AppViewState extends State<AppView> {
             );
           }
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             home: BlocBuilder<AutenticacaoBloc, AutenticacaoState>(
               builder: (context, state) {
                 if (state.status == AutenticacaoStatus.authenticated) {
@@ -82,6 +83,8 @@ class _AppViewState extends State<AppView> {
                 primary: Color(0xFF246EB9),
                 secondary: Color(0xFFEBF2FA),
                 onPrimary: Colors.white,
+                onSecondary: Color(0xFFC9CAD9),
+                onSurface: Color(0xFF333333),
               ),
             ),
             routes: {
