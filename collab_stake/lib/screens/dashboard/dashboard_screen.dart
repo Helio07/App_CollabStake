@@ -37,7 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
                 child: Center(
                   child: Text(
-                    'bem vindo fulano',
+                    'bem vindo Admin7',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

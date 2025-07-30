@@ -1,6 +1,10 @@
 import 'package:collab_stake/bloc/projetoBloc/projeto_bloc.dart';
 import 'package:collab_stake/screens/layout/layout.dart';
+import 'package:collab_stake/screens/stakeholder/create_stakeholder_screen.dart';
+import 'package:collab_stake/screens/stakeholder/projeto_edit_screen.dart';
+import 'package:collab_stake/widgets/modal_delet_projeto.dart';
 import 'package:collab_stake/widgets/project_info.dart';
+import 'package:collab_stake/widgets/stakeholder_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:collab_stake/bloc/autenticacaoBloc/autenticacao_bloc.dart';
@@ -60,14 +64,29 @@ class _StakeholderScreenState extends State<StakeholderScreen> {
                     IconButton(
                       icon: const Icon(Icons.edit),
                       onPressed: () {
-                        // Ação ao clicar no botão de editar
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlterarDadosProjeto(projeto: projeto);
+                          },
+                        );
                         print('Editar projeto');
                       },
                     ),
                     IconButton(
                       icon: const Icon(Icons.delete),
                       onPressed: () {
-                        // Ação ao clicar no botão de excluir
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.vertical(top: Radius.circular(16)),
+                          ),
+                          builder: (context) => const DeletProject(),
+                        );
                         print('Excluir projeto');
                       },
                     ),
@@ -125,6 +144,85 @@ class _StakeholderScreenState extends State<StakeholderScreen> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Text(
+                      'Stakeholders',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    CircleAvatar(
+                      radius: 14,
+                      backgroundColor: Colors.lightBlue[100],
+                      child: Text(
+                        '2', // Substitua por um valor dinâmico se necessário
+                        style: TextStyle(
+                          color: Colors.blue[800],
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const CreateStakeholderScreen();
+                          },
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(30),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                StakeholderCard(name: "denis", cargo: "orientador", interesse: "alto", influencia: "alto", tipo: "apoiador"),
+                StakeholderCard(name: "rosinei", cargo: "banca", interesse: "médio", influencia: "alta", tipo: "resistente")
+                // Expanded(
+                //   child: ListView.builder(
+                //     itemCount: projeto.stakeholders.length,
+                //     itemBuilder: (context, index) {
+                //       final stakeholder = projeto.stakeholders[index];
+                //       return StakeholderCard(
+                //         name: stakeholder.nome ?? 'Nome não informado',
+                //         cargo: stakeholder.cargo ?? 'Cargo não informado',
+                //         interesse: stakeholder.interesse ?? 'Interesse não informado',
+                //         influencia: stakeholder.influencia ?? 'Influência não informada',
+                //         tipo: stakeholder.tipo ?? 'Tipo não informado',
+                //         onEdit: () {
+                //           Navigator.pushNamed(
+                //             context,
+                //             '/stakeholder_edit',
+                //             arguments: {
+                //               'stakeholder': stakeholder,
+                //               'projetoId': projeto.id,
+                //             },
+                //           );
+                //         },
+                //         onDelete: () {
+                //           // Implementar lógica de exclusão
+                //         },
+                //       );
+                //     },
+                //   ),
+                // ),
               ],
             ),
           ),

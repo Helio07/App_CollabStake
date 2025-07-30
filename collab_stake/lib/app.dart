@@ -8,6 +8,7 @@ import 'package:collab_stake/screens/dashboard/dashboard_screen.dart';
 import 'package:collab_stake/screens/login/cadastro_screen.dart';
 import 'package:collab_stake/screens/login/login_screen.dart';
 import 'package:collab_stake/screens/login/welcome_screen.dart';
+import 'package:collab_stake/screens/stakeholder/description_stakeholder_scree.dart';
 import 'package:collab_stake/screens/stakeholder/stakeholder_screen.dart';
 import 'package:collab_stake/services/local_storage_service.dart';
 import 'package:flutter/material.dart';
@@ -92,6 +93,7 @@ class _AppViewState extends State<AppView> {
               '/cadastro': (context) => const CadastroScreen(),
               '/deshboard': (context) => const DashboardScreen(),
               '/deshboard/stakeholder': (context) => const StakeholderScreen(),
+              '/deshboard/stakeholder/description': (context) => const DescriptionScree(),
               '/deshboard/conta': (context) => const ContaScreen(),
               '/deshboard/ajuda': (context) => const AjudaScreen(),
             },
